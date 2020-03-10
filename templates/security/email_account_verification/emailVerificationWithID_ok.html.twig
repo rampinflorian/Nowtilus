@@ -1,0 +1,14 @@
+{% extends 'baseConfirm.html.twig' %}
+{% block title %} EasyBac.fr - Vérification du compte{% endblock %}
+{% block mainContaint %}
+
+ <div class="login-content">
+				<div class="alert alert-warning fade show">
+  				<center><strong>Félicitations {{ user.username }} !</strong>
+  				 Votre compte a bien été activé!</center>
+			</div>
+
+
+			<center><a class="btn btn-warning" href="{{ path('dashboard') }}" role="button" >Accès à EasyBac</button></a></center>
+			</div> 
+{% endblock %}

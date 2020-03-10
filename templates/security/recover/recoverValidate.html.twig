@@ -1,0 +1,15 @@
+{% extends 'baseConfirm.html.twig' %}
+{% block title %} EasyBac.fr - Récupération de compte{% endblock %}
+{% block mainContaint %}
+
+ <!-- begin login-content -->
+			<div class="login-content">
+				<div class="alert alert-warning fade show">
+  				<center><strong>Validation...</strong>
+  				 Votre nouveau mot de passe a été validé !</center>
+				</div>
+					<center><a class="btn btn-warning" href="{{ path('dashboard') }}" role="button" >Accès à EasyBac</button></a></center>
+			</div>
+			<!-- end login-content -->
+			</div> 
+{% endblock %}

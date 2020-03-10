@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Connexion - Nowtilus</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="{{ asset('assets/css/default/app.min.css') }}" rel="stylesheet" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+</head>
+<body class="pace-top">
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+	<!-- end #page-loader -->
+	
+	<!-- begin login-cover -->
+	<div class="login-cover">
+		<div class="login-cover-image" style="background-image: url({{ asset('assets/img/login-bg/login-bg-14.jpg)') }}" data-id="login-cover-image"></div>
+		<div class="login-cover-bg"></div>
+	</div>
+	<!-- end login-cover -->
+	
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade">
+		<!-- begin login -->
+		<div class="login login-v2" data-pageload-addclass="animated fadeIn">
+			<!-- begin brand -->
+			<div class="login-header">
+				<div class="brand">
+					<b>Now</b>Tilus
+					<small>Application personnelle</small>
+				</div>
+				<div class="icon">
+					<i class="fa fa-lock"></i>
+				</div>
+			</div>
+			<!-- end brand -->
+			<!-- begin login-content -->
+			<div class="login-content">{% block TitreFormulaire %}{% endblock %}
+			 	{% block formRegLog %}{% endblock %}
+			</div>
+			<!-- end login-content -->
+		</div>
+		<!-- end login -->		
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{{ asset('assets/js/app.min.js') }}"></script>
+	<script src="{{ asset('assets/js/theme/default.min.js') }}"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="{{ asset('assets/js/demo/login-v2.demo.js') }}"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+</body>
+</html>

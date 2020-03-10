@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marina Travail{% endblock %}
+
+{% block stylesheets %}
+    <!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+    <link href="{{ asset('assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/plugins/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css') }}" rel="stylesheet"/>
+
+    <!-- ================== END PAGE LEVEL STYLE ================== -->
+{% endblock %}
+
+{% block body %}
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb float-xl-right">
+            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:;">Tables</a></li>
+            <li class="breadcrumb-item active">Managed Tables</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        <h1 class="page-header">Gestion Travail <small>Tableau de bord</small></h1>
+        <!-- end page-header -->
+
+        <div class="row">
+            <div class="col-8">
+                <!-- begin panel -->
+                <div class="panel panel-inverse">
+                    <!-- begin panel-heading -->
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Clients enregistrés {% if stats.periode != "" %} - Période : {{ stats.periode }} {% endif %}</h4>
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        </div>
+                    </div>
+                    <!-- end panel-heading -->
+                    <!-- begin panel-body -->
+                    <div class="panel-body">
+                        <table id="data-table-default" class="table table-striped table-bordered table-td-valign-middle">
+                            <thead>
+                            <tr>
+                                <th class="text-nowrap">Nom Client</th>
+                                <th class="text-nowrap">début</th>
+                                <th class="text-nowrap">fin</th>
+                                <th class="text-nowrap">KM Libre</th>
+                                <th class="text-nowrap">KM Remboursé</th>
+                                <th class="text-nowrap">Commentaire</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for rdv in planning %}
+                                <tr class="odd gradeX">
+                                    <td>{{ rdv.client.nom }}</td>
+                                    <td>{{ rdv.heureDebut|date("d/m/y H:i") }}</td>
+                                    <td>{{ rdv.heureFin|date("d/m/y H:i") }}</td>
+                                    <td>{{ rdv.kmLibre }}</td>
+                                    <td>{{ rdv.kmPaye }}</td>
+                                    <td>{{ rdv.commentaire }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end panel-body -->
+                </div>
+                {{ form(formFilter) }}
+
+            </div>
+            <div class="col-4">
+
+                <div class="widget widget-stats bg-pink m-b-10">
+                    <div class="stats-icon stats-icon-lg"><i class="fa fa-exclamation-triangle fa-fw"></i></div>
+                    <div class="stats-content">
+                        <div class="stats-title">DISTANCE REMBOURSEE</div>
+                        <div class="stats-number">{{ stats.kmPaye }} KM ({{ stats.kmPayePourcentage }}%)</div>
+                        <div class="stats-progress progress">
+                            <div class="progress-bar" style="width: {{ stats.kmPayePourcentage }}%;"></div>
+                        </div>
+                        <div class="stats-desc">Sur un total de {{ stats.kmLibre }} kilomètres(s) parcouru(s)</div>
+                    </div>
+                </div>
+                <div class="widget widget-stats bg-gradient-purple m-b-10">
+                    <div class="stats-icon stats-icon-lg"><i class="fa fa-archive fa-fw"></i></div>
+                    <div class="stats-content">
+                        <div class="stats-title">NOMBRE D'HEURE EFFECTUEE</div>
+                        <div class="stats-number">{{ stats.tempsTravaille }}</div>
+                        <div class="stats-desc">temps calculé depuis le début d'activité</div>
+                    </div>
+                </div>
+            </div>
+            <!-- end panel -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="{{ asset('assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            // you may need to change this code if you are not using Bootstrap Datepicker
+            $('.js-datepicker').datepicker({
+                format: 'yyyy-mm'
+            });
+        });
+    </script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+{% endblock %}
+
