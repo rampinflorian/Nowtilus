@@ -40,7 +40,7 @@
                         <tbody>
                         {% for water_quality in water_qualities %}
                             <tr>
-                                <td>{{ water_quality.createdAt ? water_quality.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ water_quality.createdAt ? water_quality.createdAt|date('d/m/Y') : '' }}</td>
                                 <td>{{ water_quality.ph }}</td>
                                 <td>{{ water_quality.kh }}</td>
                                 <td>{{ water_quality.co2 }}</td>
