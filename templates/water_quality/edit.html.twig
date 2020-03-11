@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}Qualité de l'eau édition{% endblock %}
+
+{% block body %}
+    <div id="content" class="content">
+
+        <h1>Qualité de l'eau édition</h1>
+
+        {{ include('water_quality/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('water_quality_index') }}">Retour au tableau</a>
+
+        {{ include('water_quality/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

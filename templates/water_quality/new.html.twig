@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}Qualité de l'eau création{% endblock %}
+
+{% block body %}
+    <div id="content" class="content">
+        <h1>Qualité de l'eau création</h1>
+
+        {{ include('water_quality/_form.html.twig') }}
+
+        <a href="{{ path('water_quality_index') }}">Retour au tableau</a>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

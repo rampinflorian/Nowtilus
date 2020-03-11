@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block title %}Qualité de l'eau{% endblock %}
+
+{% block body %}
+    <div id="content" class="content">
+        <h1>Qualité de l'eau</h1>
+        <div class="panel panel-inverse" data-sortable-id="table-basic-1">
+            <!-- begin panel-heading -->
+            <div class="panel-heading">
+                <h4 class="panel-title">Default Table</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                </div>
+            </div>
+            <!-- end panel-heading -->
+            <!-- begin panel-body -->
+            <div class="panel-body">
+                <!-- begin table-responsive -->
+                <div class="table-responsive">
+                    <table class="table m-b-0">
+                        <thead>
+                        <tr>
+                            <th>CreatedAt</th>
+                            <th>Ph</th>
+                            <th>Kh</th>
+                            <th>Co2</th>
+                            <th>No2</th>
+                            <th>No3</th>
+                            <th>Fe</th>
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for water_quality in water_qualities %}
+                            <tr>
+                                <td>{{ water_quality.createdAt ? water_quality.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                                <td>{{ water_quality.ph }}</td>
+                                <td>{{ water_quality.kh }}</td>
+                                <td>{{ water_quality.co2 }}</td>
+                                <td>{{ water_quality.no2 }}</td>
+                                <td>{{ water_quality.no3 }}</td>
+                                <td>{{ water_quality.fe }}</td>
+                                <td>
+                                    <a href="{{ path('water_quality_show', {'id': water_quality.id}) }}">Afficher</a>
+                                    <a href="{{ path('water_quality_edit', {'id': water_quality.id}) }}">éditer</a>
+                                    {{ include('water_quality/_delete_form.html.twig') }}
+
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="9">Pas d'enregistrement</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end table-responsive -->
+            </div>
+            <!-- end panel-body -->
+        </div>
+        <!-- end panel -->
+
+
+        <a href="{{ path('water_quality_new') }}">Nouveau</a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

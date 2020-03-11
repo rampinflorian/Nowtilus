@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block title %}WaterQuality{% endblock %}
+
+{% block body %}
+    <div id="content" class="content">
+
+        <h1>Test</h1>
+
+        <table class="table">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ water_quality.id }}</td>
+            </tr>
+            <tr>
+                <th>Ph</th>
+                <td>{{ water_quality.ph }}</td>
+            </tr>
+            <tr>
+                <th>Kh</th>
+                <td>{{ water_quality.kh }}</td>
+            </tr>
+            <tr>
+                <th>Co2</th>
+                <td>{{ water_quality.co2 }}</td>
+            </tr>
+            <tr>
+                <th>No2</th>
+                <td>{{ water_quality.no2 }}</td>
+            </tr>
+            <tr>
+                <th>No3</th>
+                <td>{{ water_quality.no3 }}</td>
+            </tr>
+            <tr>
+                <th>Fe</th>
+                <td>{{ water_quality.fe }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ water_quality.createdAt ? water_quality.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <a href="{{ path('water_quality_index') }}">Retour au tableau</a>
+
+        <a href="{{ path('water_quality_edit', {'id': water_quality.id}) }}">éditer</a>
+
+        {{ include('water_quality/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
