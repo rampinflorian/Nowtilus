@@ -74,6 +74,7 @@
             "@auto-scripts"
         ],
         "compile": [
+            "php bin/console --env=prod doctrine:schema:drop --full-database\n",
             "php bin/console doctrine:migrations:migrate -n"
         ]
     },
