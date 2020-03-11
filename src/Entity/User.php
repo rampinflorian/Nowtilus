@@ -47,9 +47,6 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->telemanagements = new ArrayCollection();
-        $this->messagings = new ArrayCollection();
-        $this->actions = new ArrayCollection();
     }
 
     public function getId(): ?int
