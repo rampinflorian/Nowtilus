@@ -38,7 +38,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for water_quality in water_qualities %}
+
+                        {% for water_quality in water_qualities["hydra:member"] %}
                             <tr>
                                 <td>{{ water_quality.createdAt ? water_quality.createdAt|date('d/m/Y') : '' }}</td>
                                 <td>{{ water_quality.ph }}</td>

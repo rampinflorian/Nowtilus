@@ -4,11 +4,17 @@ namespace App\Controller;
 
 use App\Entity\WaterQuality;
 use App\Form\WaterQualityType;
-use App\Repository\WaterQualityRepository;
+use App\Utils\CallAPI\API_waterQualities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+
 
 /**
  * @Route("/waterquality")
@@ -17,13 +23,18 @@ class WaterQualityController extends AbstractController
 {
     /**
      * @Route("/", name="water_quality_index", methods={"GET"})
-     * @param WaterQualityRepository $waterQualityRepository
+     * @param API_waterQualities $API_waterQualities
      * @return Response
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
-    public function index(WaterQualityRepository $waterQualityRepository): Response
+    public function index(API_waterQualities $API_waterQualities): Response
     {
         return $this->render('water_quality/index.html.twig', [
-            'water_qualities' => $waterQualityRepository->findAll(),
+            'water_qualities' => $API_waterQualities->findAll(),
         ]);
     }
 
@@ -54,13 +65,19 @@ class WaterQualityController extends AbstractController
 
     /**
      * @Route("/{id}", name="water_quality_show", methods={"GET"})
-     * @param WaterQuality $waterQuality
+     * @param int $id
+     * @param API_waterQualities $API_waterQualities
      * @return Response
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
-    public function show(WaterQuality $waterQuality): Response
+    public function show(int $id, API_waterQualities $API_waterQualities): Response
     {
         return $this->render('water_quality/show.html.twig', [
-            'water_quality' => $waterQuality,
+            'water_quality' => $API_waterQualities->find($id),
         ]);
     }
 
@@ -89,18 +106,14 @@ class WaterQualityController extends AbstractController
 
     /**
      * @Route("/{id}", name="water_quality_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param WaterQuality $waterQuality
+     * @param string $id
+     * @param API_waterQualities $API_waterQualities
      * @return Response
+     * @throws TransportExceptionInterface
      */
-    public function delete(Request $request, WaterQuality $waterQuality): Response
+    public function delete(string $id, API_waterQualities $API_waterQualities): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $waterQuality->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($waterQuality);
-            $entityManager->flush();
-        }
-
+        $API_waterQualities->delete($id);
         return $this->redirectToRoute('water_quality_index');
     }
 }
