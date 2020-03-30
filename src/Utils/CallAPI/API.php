@@ -2,23 +2,57 @@
 
 namespace App\Utils\CallAPI;
 
+use App\Utils\CallAPI\Entity\WaterQuality;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 
 abstract class API
 {
-    private $client;
-    private $hostUrlAPI = "https://easybacapi.herokuapp.com/api/";
+    private HttpClientInterface $client;
+    private string $hostUrlAPI = "https://easybacapi.herokuapp.com/api/";
+    protected SerializerInterface $serializer;
+    protected string $pathUrl = "";
 
     /**
      * API constructor.
+     * @param SerializerInterface $serializer
      */
-    public function __construct()
+    public function __construct(SerializerInterface $serializer)
     {
-        $this->client = HttpClient::create();
+        $this->client = HttpClient::create([
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
+        ]);
+        $this->serializer = $serializer;
     }
+
+    /**
+     * @return mixed
+     */
+    abstract public function findAll();
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    abstract public function find(int $id);
+
+    /**
+     * @param int $id
+     * @return mixed
+     */
+    abstract public function delete(int $id);
+
+    /**
+     * @param WaterQuality $waterQuality
+     * @return mixed
+     */
+    abstract public function post(WaterQuality $waterQuality);
 
     /**
      * @param string $verb
@@ -32,8 +66,23 @@ abstract class API
     }
 
     /**
+     * @param Object $object
+     * @param string $url
+     * @return ResponseInterface
+     * @throws TransportExceptionInterface
+     */
+    protected function postResponseInterface(Object $object, string $url): ResponseInterface
+    {
+        $serialise = $this->serializer->serialize($object, 'json');
+        return $this->client->request('POST', $this->hostUrlAPI . $url, [
+            'body' => $serialise
+        ]);
+    }
+
+    /**
      * @param ResponseInterface $response
      * @throws TransportExceptionInterface
+     * @throws \Exception
      */
     protected function throwErrorStatusCodeNot200(ResponseInterface $response): void
     {

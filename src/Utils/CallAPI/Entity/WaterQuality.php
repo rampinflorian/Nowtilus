@@ -1,22 +1,12 @@
 <?php
 
-namespace App\Entity;
+namespace App\Utils\CallAPI\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\WaterQualityRepository")
- * @ORM\HasLifecycleCallbacks()
- */
 class WaterQuality
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+
     private $id;
 
     /**
@@ -52,15 +42,7 @@ class WaterQuality
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function PrePersistSetCreatedAt()
-    {
-        $this->setCreatedAt(new \DateTime('now'));
-    }
+    private $createdAt = null;
 
     public function getPh(): ?float
     {
@@ -77,6 +59,13 @@ class WaterQuality
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getKh(): ?float
@@ -139,16 +128,16 @@ class WaterQuality
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
     }
 
 }

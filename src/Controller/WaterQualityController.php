@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\WaterQuality;
+use App\Utils\CallAPI\Entity\WaterQuality;
 use App\Form\WaterQualityType;
 use App\Utils\CallAPI\API_waterQualities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,20 +40,23 @@ class WaterQualityController extends AbstractController
 
     /**
      * @Route("/new", name="water_quality_new", methods={"GET","POST"})
+     * @param API_waterQualities $API_waterQualities
      * @param Request $request
      * @return Response
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
-    public function new(Request $request): Response
+    public function new(API_waterQualities $API_waterQualities, Request $request): Response
     {
         $waterQuality = new WaterQuality();
         $form = $this->createForm(WaterQualityType::class, $waterQuality);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($waterQuality);
-            $entityManager->flush();
-
+            $waterQuality->setCreatedAt(new \DateTime('now'));
+            $API_waterQualities->post($waterQuality);
             return $this->redirectToRoute('water_quality_index');
         }
 
@@ -69,7 +72,6 @@ class WaterQualityController extends AbstractController
      * @param API_waterQualities $API_waterQualities
      * @return Response
      * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
@@ -93,7 +95,6 @@ class WaterQualityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('water_quality_index');
         }
