@@ -38,10 +38,9 @@ class API_waterQualities extends API
         if ($response->getStatusCode() == 200) {
             $arrayResponse = $response->toArray();
 
-            dd($arrayResponse);
             $waterQualities = [];
             foreach ($arrayResponse["hydra:member"] as $wq) {
-                $waterQualities[] = $this->serializer->deserialize($wq, WaterQuality::class, 'array');
+                //TODO: Trouver comment transformer un array en objet, voir si on ne peut pas faire une boucle directement dans le JSON
             }
 
             return $waterQualities;
