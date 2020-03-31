@@ -85,17 +85,23 @@ class WaterQualityController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="water_quality_edit", methods={"GET","POST"})
+     * @param int $id
      * @param Request $request
-     * @param WaterQuality $waterQuality
+     * @param API_waterQualities $API_waterQualities
      * @return Response
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
-    public function edit(Request $request, WaterQuality $waterQuality): Response
+    public function edit(int $id, Request $request, API_waterQualities $API_waterQualities): Response
     {
+        $waterQuality = $API_waterQualities->find($id);
         $form = $this->createForm(WaterQualityType::class, $waterQuality);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $API_waterQualities->put($waterQuality);
             return $this->redirectToRoute('water_quality_index');
         }
 

@@ -15,7 +15,6 @@ abstract class API
     private HttpClientInterface $client;
     private string $hostUrlAPI = "https://easybacapi.herokuapp.com/api/";
     protected SerializerInterface $serializer;
-    protected string $pathUrl = "";
 
     /**
      * API constructor.
@@ -75,6 +74,20 @@ abstract class API
     {
         $serialise = $this->serializer->serialize($object, 'json');
         return $this->client->request('POST', $this->hostUrlAPI . $url, [
+            'body' => $serialise
+        ]);
+    }
+
+    /**
+     * @param Object $object
+     * @param string $url
+     * @return ResponseInterface
+     * @throws TransportExceptionInterface
+     */
+    protected function putResponseInterface(Object $object, string $url): ResponseInterface
+    {
+        $serialise = $this->serializer->serialize($object, 'json');
+        return $this->client->request('PUT', $this->hostUrlAPI . $url, [
             'body' => $serialise
         ]);
     }

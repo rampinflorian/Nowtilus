@@ -13,6 +13,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 class API_waterQualities extends API
 {
+    private const PATHURL = 'water_qualities';
     /**
      * API_waterQualities constructor.
      * @param SerializerInterface $serializer
@@ -20,7 +21,6 @@ class API_waterQualities extends API
     public function __construct(SerializerInterface $serializer)
     {
         parent::__construct($serializer);
-        $this->pathUrl = "water_qualities";
     }
 
     /**
@@ -34,16 +34,13 @@ class API_waterQualities extends API
      */
     public function findAll(): array
     {
-        $response = $this->getResponseInterface('GET', $this->pathUrl);
+        $response = $this->getResponseInterface('GET', self::PATHURL);
         if ($response->getStatusCode() == 200) {
-            $arrayResponse = $response->toArray();
-
-            $waterQualities = [];
-            foreach ($arrayResponse["hydra:member"] as $wq) {
-                //TODO: Trouver comment transformer un array en objet, voir si on ne peut pas faire une boucle directement dans le JSON
+            $datas = [];
+            foreach ($response->toArray()["hydra:member"] as $value) {
+                $datas[] = $this->serializer->deserialize(json_encode($value), WaterQuality::class, 'json');
             }
-
-            return $waterQualities;
+            return $datas;
         } else {
             $this->throwErrorStatusCodeNot200($response);
         }
@@ -51,7 +48,7 @@ class API_waterQualities extends API
 
     /**
      * @param int $id
-     * @return array
+     * @return WaterQuality|array|object|null
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
@@ -59,7 +56,7 @@ class API_waterQualities extends API
      */
     public function find(int $id): WaterQuality
     {
-        $response = $this->getResponseInterface('GET', $this->pathUrl . '/' . $id);
+        $response = $this->getResponseInterface('GET', self::PATHURL . '/' . $id);
         if ($response->getStatusCode() == 200) {
             return $this->serializer->deserialize($response->getContent(), WaterQuality::class, 'json');
         } else {
@@ -74,7 +71,7 @@ class API_waterQualities extends API
      */
     public function delete(int $id): bool
     {
-        $response = $this->getResponseInterface('DELETE', $this->pathUrl . '/' . $id);
+        $response = $this->getResponseInterface('DELETE', self::PATHURL . '/' . $id);
 
         if ($response->getStatusCode() == 204) {
             return true;
@@ -90,6 +87,15 @@ class API_waterQualities extends API
      */
     public function post(WaterQuality $waterQuality): void
     {
-        $request = $this->postResponseInterface($waterQuality, "water_qualities");
+        $this->postResponseInterface($waterQuality, self::PATHURL);
+    }
+
+    /**
+     * @param WaterQuality $waterQuality
+     * @throws TransportExceptionInterface
+     */
+    public function put(WaterQuality $waterQuality): void
+    {
+        $this->putResponseInterface($waterQuality, self::PATHURL . '/' . $waterQuality->getId());
     }
 }
