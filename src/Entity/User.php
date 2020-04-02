@@ -45,8 +45,14 @@ class User implements UserInterface
      */
     private $surname;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\FluxRSS", mappedBy="user", orphanRemoval=true)
+     */
+    private $fluxRSS;
+
     public function __construct()
     {
+        $this->fluxRSS = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +150,37 @@ class User implements UserInterface
     public function setSurname(string $surname): self
     {
         $this->surname = $surname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|FluxRSS[]
+     */
+    public function getFluxRSS(): Collection
+    {
+        return $this->fluxRSS;
+    }
+
+    public function addFluxRS(FluxRSS $fluxRS): self
+    {
+        if (!$this->fluxRSS->contains($fluxRS)) {
+            $this->fluxRSS[] = $fluxRS;
+            $fluxRS->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFluxRS(FluxRSS $fluxRS): self
+    {
+        if ($this->fluxRSS->contains($fluxRS)) {
+            $this->fluxRSS->removeElement($fluxRS);
+            // set the owning side to null (unless already changed)
+            if ($fluxRS->getUser() === $this) {
+                $fluxRS->setUser(null);
+            }
+        }
 
         return $this;
     }

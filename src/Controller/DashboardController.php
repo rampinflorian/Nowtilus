@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\FluxRSSRepository;
 use FeedIo\FeedIo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,16 +13,24 @@ class DashboardController extends AbstractController
     /**
      * @Route("/", name="dashboard")
      * @param FeedIo $feedIo
+     * @param FluxRSSRepository $fluxRSSRepository
      * @return Response
      * @throws \Exception
      */
-    public function index(FeedIo $feedIo)
+    public function index(FeedIo $feedIo, FluxRSSRepository $fluxRSSRepository)
     {
+        $fluxRSSrep = $fluxRSSRepository->findByUserIsActive($this->getUser());
 
-        $result = $feedIo->read('https://www.bfmtv.com/rss/info/flux-rss/flux-toutes-les-actualites/', null, new \DateTime('- 1 days'))->getFeed();
+        $fluxRSS = [];
+
+        foreach ($fluxRSSrep as $f) {
+            $fluxRSS[] = $feedIo->read($f->getLink(), null, new \DateTime("- {$f->getHistory()}hours"))->getFeed();
+            $feedIo->resetFilters();
+        }
+
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
-            'result' => $result
+            'fluxRSS' => $fluxRSS
         ]);
     }
 }

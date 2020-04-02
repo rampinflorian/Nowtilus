@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit FluxRSS{% endblock %}
+
+{% block body %}
+    <h1>Edit FluxRSS</h1>
+
+    {{ include('flux_rss/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('fluxrss_index') }}">back to list</a>
+
+    {{ include('flux_rss/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}FluxRSS index{% endblock %}
+
+{% block body %}
+    <h1>FluxRSS index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Link</th>
+            <th>IsActive</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for fluxrss in fluxrsses %}
+            <tr>
+                <td>{{ fluxrss.id }}</td>
+                <td>{{ fluxrss.title }}</td>
+                <td>{{ fluxrss.link }}</td>
+                <td>{{ fluxrss.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ fluxrss.history }}</td>
+                <td>
+                    <a href="{{ path('fluxrss_show', {'id': fluxrss.id}) }}">show</a>
+                    <a href="{{ path('fluxrss_edit', {'id': fluxrss.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('fluxrss_new') }}">Create new</a>
+{% endblock %}
