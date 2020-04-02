@@ -9,13 +9,14 @@
 
     <!-- ================== BEGIN BASE CSS STYLE ================== -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+    <link rel="icon" href="{{ asset('assets/img/nowtilus.ico') }}"/>
 
     {% block head_css %}
         <link href="{{ asset('assets/css/default/app.min.css') }}" rel="stylesheet"/>
         <!-- BLUE -->
-        <link href="{{ asset('assets/css/default/theme/blue.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('assets/css/default/theme/orange.min.css') }}" rel="stylesheet"/>
     {% endblock %}
-    
+
     {% block stylesheets %}{% endblock %}
 
 </head>
@@ -30,7 +31,7 @@
     <div id="header" class="header navbar-inverse">
         <!-- begin navbar-header -->
         <div class="navbar-header">
-            <a href="{{ path('dashboard') }}" class="navbar-brand"><span class="navbar-logo"></span> <b>Now</b>Tilus</a>
+            <a href="{{ path('dashboard') }}" class="navbar-brand"><img src="{{ asset('assets/img/nowtilus.ico') }}"> <b>&nbsp;&nbsp;Now</b>Tilus</a>
             <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
