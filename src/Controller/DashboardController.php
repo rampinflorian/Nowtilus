@@ -24,8 +24,14 @@ class DashboardController extends AbstractController
         $fluxRSS = [];
 
         foreach ($fluxRSSrep as $f) {
-            $fluxRSS[] = $feedIo->read($f->getLink(), null, new \DateTime("- {$f->getHistory()}hours"))->getFeed();
+            $temp = [];
+            $flux = $feedIo->read($f->getLink(), null, new \DateTime("- {$f->getHistory()}hours"))->getFeed();
             $feedIo->resetFilters();
+
+            $temp['title'] = $f->getTitle();
+            $temp['flux'] = $flux;
+
+            $fluxRSS[] = $temp;
         }
 
         return $this->render('dashboard/index.html.twig', [

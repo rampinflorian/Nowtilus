@@ -12,7 +12,7 @@
                 <ul class="nav nav-tabs nav-tabs-inverse nav-justified nav-justified-mobile" data-sortable-id="index-2">
                     {% for flux in fluxRSS %}
                         <li class="nav-item"><a href="#flux-{{ loop.index0 }}" data-toggle="tab" class="nav-link {{ loop.first ? 'active' }}"><i class="fa fa-rss fa-lg m-r-5"></i> <span
-                                        class="d-none d-md-inline">{{ flux.description }}</span></a></li>
+                                        class="d-none d-md-inline">{{ flux['title'] }}</span></a></li>
                     {% endfor %}
                 </ul>
                 <div class="tab-content" data-sortable-id="index-3">
@@ -20,7 +20,7 @@
                         <div class="tab-pane fade {{ loop.first ? 'active show' }}" id="flux-{{ loop.index0 }}">
                             <div class="height-lg" data-scrollbar="true">
                                 <ul class="media-list media-list-with-divider">
-                                    {% for f in flux %}
+                                    {% for f in flux['flux'] %}
                                         <li class="media media-lg">
                                             <div class="media-body">
                                                 <h5 class="media-heading"><a href="{{ f.link }}" class="pull-left">{{ f.title }}</a></h5><br/>
