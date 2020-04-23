@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://ivgz2rnl5rh7sphb.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/q37xhni5ef4dsh2v</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="db_nowtilus@localhost" uuid="c9dd1d31-5e53-499c-85b5-30b283ea4b92">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://localhost:3307/db_nowtilus</jdbc-url>
+    </data-source>
   </component>
 </project>
