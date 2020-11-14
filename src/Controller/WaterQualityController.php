@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Utils\CallAPI\Entity\WaterQuality;
+use App\Service\API\Aquarium\Entity\WaterQuality;
+use App\Service\API\Aquarium\WaterQualitiesService;
 use App\Form\WaterQualityType;
-use App\Utils\CallAPI\API_waterQualities;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class WaterQualityController extends AbstractController
 {
     /**
      * @Route("/", name="water_quality_index", methods={"GET"})
-     * @param API_waterQualities $API_waterQualities
+     * @param WaterQualitiesService $waterQualitiesService
      * @return Response
      * @throws ClientExceptionInterface
      * @throws DecodingExceptionInterface
@@ -31,24 +31,21 @@ class WaterQualityController extends AbstractController
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function index(API_waterQualities $API_waterQualities): Response
+    public function index(WaterQualitiesService $waterQualitiesService): Response
     {
         return $this->render('water_quality/index.html.twig', [
-            'water_qualities' => $API_waterQualities->findAll(),
+            'water_qualities' => $waterQualitiesService->findAll(),
         ]);
     }
 
     /**
      * @Route("/new", name="water_quality_new", methods={"GET","POST"})
-     * @param API_waterQualities $API_waterQualities
+     * @param WaterQualitiesService $waterQualitiesService
      * @param Request $request
      * @return Response
-     * @throws ClientExceptionInterface
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function new(API_waterQualities $API_waterQualities, Request $request): Response
+    public function new(WaterQualitiesService $waterQualitiesService, Request $request): Response
     {
         $waterQuality = new WaterQuality();
         $form = $this->createForm(WaterQualityType::class, $waterQuality);
@@ -56,7 +53,7 @@ class WaterQualityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $waterQuality->setCreatedAt(new \DateTime('now'));
-            $API_waterQualities->post($waterQuality);
+            $waterQualitiesService->post($waterQuality);
             return $this->redirectToRoute('water_quality_index');
         }
 
@@ -69,17 +66,17 @@ class WaterQualityController extends AbstractController
     /**
      * @Route("/{id}", name="water_quality_show", methods={"GET"})
      * @param int $id
-     * @param API_waterQualities $API_waterQualities
+     * @param WaterQualitiesService $waterQualitiesService
      * @return Response
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function show(int $id, API_waterQualities $API_waterQualities): Response
+    public function show(int $id, WaterQualitiesService $waterQualitiesService): Response
     {
         return $this->render('water_quality/show.html.twig', [
-            'water_quality' => $API_waterQualities->find($id),
+            'water_quality' => $waterQualitiesService->find($id),
         ]);
     }
 
@@ -87,21 +84,21 @@ class WaterQualityController extends AbstractController
      * @Route("/{id}/edit", name="water_quality_edit", methods={"GET","POST"})
      * @param int $id
      * @param Request $request
-     * @param API_waterQualities $API_waterQualities
+     * @param WaterQualitiesService $waterQualitiesService
      * @return Response
      * @throws ClientExceptionInterface
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    public function edit(int $id, Request $request, API_waterQualities $API_waterQualities): Response
+    public function edit(int $id, Request $request, WaterQualitiesService $waterQualitiesService): Response
     {
-        $waterQuality = $API_waterQualities->find($id);
+        $waterQuality = $waterQualitiesService->find($id);
         $form = $this->createForm(WaterQualityType::class, $waterQuality);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $API_waterQualities->put($waterQuality);
+            $waterQualitiesService->put($waterQuality);
             return $this->redirectToRoute('water_quality_index');
         }
 
@@ -114,13 +111,13 @@ class WaterQualityController extends AbstractController
     /**
      * @Route("/{id}", name="water_quality_delete", methods={"DELETE"})
      * @param string $id
-     * @param API_waterQualities $API_waterQualities
+     * @param WaterQualitiesService $waterQualitiesService
      * @return Response
      * @throws TransportExceptionInterface
      */
-    public function delete(string $id, API_waterQualities $API_waterQualities): Response
+    public function delete(string $id, WaterQualitiesService $waterQualitiesService): Response
     {
-        $API_waterQualities->delete($id);
+        $waterQualitiesService->delete($id);
         return $this->redirectToRoute('water_quality_index');
     }
 }

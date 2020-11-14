@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Utils\CallAPI\Entity;
+namespace App\Service\API\Aquarium\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

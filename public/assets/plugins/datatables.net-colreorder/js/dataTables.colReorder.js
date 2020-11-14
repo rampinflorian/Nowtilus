@@ -1369,7 +1369,7 @@ $(document).on( 'preInit.dt.colReorder', function (e, settings) {
 } );
 
 
-// API augmentation
+// AquariumAPIService augmentation
 $.fn.dataTable.Api.register( 'colReorder.reset()', function () {
 	return this.iterator( 'table', function ( ctx ) {
 		ctx._colReorder.fnReset();

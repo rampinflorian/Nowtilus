@@ -66,7 +66,7 @@ var KeyTable = function ( dt, opts ) {
 
 	// Internal settings
 	this.s = {
-		/** @type {DataTable.Api} DataTables' API instance */
+		/** @type {DataTable.Api} DataTables' AquariumAPIService instance */
 		dt: new DataTable.Api( dt ),
 
 		enable: true,
@@ -102,7 +102,7 @@ var KeyTable = function ( dt, opts ) {
 
 $.extend( KeyTable.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * API methods for DataTables API interface
+	 * AquariumAPIService methods for DataTables AquariumAPIService interface
 	 */
 
 	/**
@@ -573,7 +573,7 @@ $.extend( KeyTable.prototype, {
 	/**
 	 * Focus on a particular cell, shifting the table's paging if required
 	 *
-	 * @param  {DataTables.Api|integer} row Can be given as an API instance that
+	 * @param  {DataTables.Api|integer} row Can be given as an AquariumAPIService instance that
 	 *   contains the cell to focus or as an integer. As the latter it is the
 	 *   visible row index (from the whole data set) - NOT the data index
 	 * @param  {integer} [column] Not required if a cell is given as the first
@@ -598,7 +598,7 @@ $.extend( KeyTable.prototype, {
 		}
 
 		if ( typeof row !== 'number' ) {
-			// Its an API instance - check that there is actually a row
+			// Its an AquariumAPIService instance - check that there is actually a row
 			if ( ! row.any() ) {
 				return;
 			}

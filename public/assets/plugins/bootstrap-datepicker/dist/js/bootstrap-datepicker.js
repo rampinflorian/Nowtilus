@@ -2017,7 +2017,7 @@
 	};
 
 
-	/* DATEPICKER DATA-API
+	/* DATEPICKER DATA-AquariumAPIService
 	* ================== */
 
 	$(document).on(

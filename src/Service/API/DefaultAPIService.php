@@ -1,57 +1,31 @@
 <?php
 
-namespace App\Utils\CallAPI;
 
-use App\Utils\CallAPI\Entity\WaterQuality;
+namespace App\Service\API;
+
+
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-
-abstract class API
+abstract class DefaultAPIService
 {
     private HttpClientInterface $client;
-    private string $hostUrlAPI = "https://easybacapi.herokuapp.com/api/";
+    protected string $host = "";
     protected SerializerInterface $serializer;
 
-    /**
-     * API constructor.
-     * @param SerializerInterface $serializer
-     */
-    public function __construct(SerializerInterface $serializer)
+    public function __construct(SerializerInterface $serializer, $host)
     {
         $this->client = HttpClient::create([
             'headers' => [
                 'Content-Type' => 'application/json'
             ]
         ]);
+        $this->host = $host;
         $this->serializer = $serializer;
     }
-
-    /**
-     * @return mixed
-     */
-    abstract public function findAll();
-
-    /**
-     * @param int $id
-     * @return mixed
-     */
-    abstract public function find(int $id);
-
-    /**
-     * @param int $id
-     * @return mixed
-     */
-    abstract public function delete(int $id);
-
-    /**
-     * @param WaterQuality $waterQuality
-     * @return mixed
-     */
-    abstract public function post(WaterQuality $waterQuality);
 
     /**
      * @param string $verb
@@ -61,7 +35,7 @@ abstract class API
      */
     protected function getResponseInterface(string $verb, string $url): ResponseInterface
     {
-        return $this->client->request($verb, $this->hostUrlAPI . $url);
+        return $this->client->request($verb, $this->host . $url);
     }
 
     /**
@@ -73,7 +47,7 @@ abstract class API
     protected function postResponseInterface(Object $object, string $url): ResponseInterface
     {
         $serialise = $this->serializer->serialize($object, 'json');
-        return $this->client->request('POST', $this->hostUrlAPI . $url, [
+        return $this->client->request('POST', $this->host . $url, [
             'body' => $serialise
         ]);
     }
@@ -87,9 +61,14 @@ abstract class API
     protected function putResponseInterface(Object $object, string $url): ResponseInterface
     {
         $serialise = $this->serializer->serialize($object, 'json');
-        return $this->client->request('PUT', $this->hostUrlAPI . $url, [
+        return $this->client->request('PUT', $this->host . $url, [
             'body' => $serialise
         ]);
+    }
+
+    protected function setHost(string $host) : void
+    {
+        $this->host = $host;
     }
 
     /**

@@ -4,7 +4,7 @@
 
 /**
  * @summary     Select for DataTables
- * @description A collection of API methods, events and buttons for DataTables
+ * @description A collection of AquariumAPIService methods, events and buttons for DataTables
  *   that provides selection options of the items in a DataTable
  * @version     1.3.0
  * @file        dataTables.select.js
@@ -144,7 +144,7 @@ DataTable.select.init = function ( dt ) {
 
 /*
 
-Select is a collection of API methods, event handlers, event emitters and
+Select is a collection of AquariumAPIService methods, event handlers, event emitters and
 buttons (for the `Buttons` extension) for DataTables. It provides the following
 features, with an overview of how they are implemented:
 
@@ -162,18 +162,18 @@ features, with an overview of how they are implemented:
 This method of using boolean flags allows Select to operate when nodes have not
 been created for rows / cells (DataTables' defer rendering feature).
 
-## API methods
+## AquariumAPIService methods
 
-A range of API methods are available for triggering selection and de-selection
+A range of AquariumAPIService methods are available for triggering selection and de-selection
 of rows. Methods are also available to configure the selection events that can
 be triggered by an end user (such as which items are to be selected). To a large
-extent, these of API methods *is* Select. It is basically a collection of helper
+extent, these of AquariumAPIService methods *is* Select. It is basically a collection of helper
 functions that can be used to select items in a DataTable.
 
 Configuration of select is held in the object `_select` which is attached to the
 DataTables settings object on initialisation. Select being available on a table
 is not optional when Select is loaded, but its default is for selection only to
-be available via the API - so the end user wouldn't be able to select rows
+be available via the AquariumAPIService - so the end user wouldn't be able to select rows
 without additional configuration.
 
 The `_select` object contains the following properties:
@@ -192,7 +192,7 @@ The `_select` object contains the following properties:
 }
 ```
 
-In addition to the API methods, Select also extends the DataTables selector
+In addition to the AquariumAPIService methods, Select also extends the DataTables selector
 options for rows, columns and cells adding a `selected` option to the selector
 options object, allowing the developer to select only selected items or
 unselected items.
@@ -200,7 +200,7 @@ unselected items.
 ## Mouse selection of items
 
 Clicking on items can be used to select items. This is done by a simple event
-handler that will select the items using the API methods.
+handler that will select the items using the AquariumAPIService methods.
 
  */
 
@@ -783,7 +783,7 @@ DataTable.ext.selector.cell.push( function ( settings, opts, cells ) {
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * DataTables API
+ * DataTables AquariumAPIService
  *
  * For complete documentation, please refer to the docs/api directory or the
  * DataTables site
@@ -846,7 +846,7 @@ apiRegister( 'select.style()', function ( style ) {
 		}
 
 		// Add / remove mouse event handlers. They aren't required when only
-		// API selection is available
+		// AquariumAPIService selection is available
 		var dt = new DataTable.Api( ctx );
 		disableMouseSelection( dt );
 		

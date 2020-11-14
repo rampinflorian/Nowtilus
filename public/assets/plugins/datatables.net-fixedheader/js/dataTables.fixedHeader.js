@@ -132,7 +132,7 @@ var FixedHeader = function ( dt, config ) {
  */
 $.extend( FixedHeader.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * API methods
+	 * AquariumAPIService methods
 	 */
 	
 	/**
@@ -633,7 +633,7 @@ $(document).on( 'init.dt.dtfh', function (e, settings, json) {
 	}
 } );
 
-// DataTables API methods
+// DataTables AquariumAPIService methods
 DataTable.Api.register( 'fixedHeader()', function () {} );
 
 DataTable.Api.register( 'fixedHeader.adjust()', function () {

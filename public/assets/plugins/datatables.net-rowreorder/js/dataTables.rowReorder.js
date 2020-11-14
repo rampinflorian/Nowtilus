@@ -90,7 +90,7 @@ var RowReorder = function ( dt, opts ) {
 		/** @type {integer} Scroll body top cache */
 		bodyTop: null,
 
-		/** @type {DataTable.Api} DataTables' API instance */
+		/** @type {DataTable.Api} DataTables' AquariumAPIService instance */
 		dt: new DataTable.Api( dt ),
 
 		/** @type {function} Data fetch function */
@@ -752,7 +752,7 @@ RowReorder.defaults = {
 
 
 /*
- * API
+ * AquariumAPIService
  */
 var Api = $.fn.dataTable.Api;
 

@@ -77,7 +77,7 @@ var AutoFill = function( dt, opts )
 	 * @namespace Settings object which contains customisable information for AutoFill instance
 	 */
 	this.s = {
-		/** @type {DataTable.Api} DataTables' API instance */
+		/** @type {DataTable.Api} DataTables' AquariumAPIService instance */
 		dt: new DataTable.Api( dt ),
 
 		/** @type {String} Unique namespace for events attached to the document */
@@ -143,7 +143,7 @@ var AutoFill = function( dt, opts )
 
 $.extend( AutoFill.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods (exposed via the DataTables API below)
+	 * Public methods (exposed via the DataTables AquariumAPIService below)
 	 */
 	enabled: function ()
 	{
@@ -196,7 +196,7 @@ $.extend( AutoFill.prototype, {
 		var dt = this.s.dt;
 		var dtScroll = $('div.dataTables_scrollBody', this.s.dt.table().container());
 
-		// Make the instance accessible to the API
+		// Make the instance accessible to the AquariumAPIService
 		dt.settings()[0].autoFill = this;
 
 		if ( dtScroll.length ) {
@@ -422,7 +422,7 @@ $.extend( AutoFill.prototype, {
 
 
 	/**
-	 * Use the Editor API to perform an update based on the new data for the
+	 * Use the Editor AquariumAPIService to perform an update based on the new data for the
 	 * cells
 	 *
 	 * @param {array} cells Information about the selected cells from the key
@@ -1147,7 +1147,7 @@ AutoFill.classes = {
 
 
 /*
- * API
+ * AquariumAPIService
  */
 var Api = $.fn.dataTable.Api;
 

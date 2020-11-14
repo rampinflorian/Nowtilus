@@ -81,7 +81,7 @@ var DataTable = $.fn.dataTable;
  *  @class
  *  @constructor
  *  @global
- *  @param {object} dt DataTables settings object or API instance
+ *  @param {object} dt DataTables settings object or AquariumAPIService instance
  *  @param {object} [opts={}] Configuration object for FixedColumns. Options 
  *    are defined by {@link Scroller.defaults}
  *
@@ -126,7 +126,7 @@ var Scroller = function ( dt, opts ) {
 		dt: dtApi.settings()[0],
 
 		/**
-		 * DataTables API instance
+		 * DataTables AquariumAPIService instance
 		 *  @type     DataTable.Api
 		 */
 		dtApi: dtApi,
@@ -264,7 +264,7 @@ var Scroller = function ( dt, opts ) {
 
 $.extend( Scroller.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	 * Public methods - to be exposed via the DataTables API
+	 * Public methods - to be exposed via the DataTables AquariumAPIService
 	 */
 
 	/**
@@ -1228,7 +1228,7 @@ $.fn.dataTable.Scroller = Scroller;
 $.fn.DataTable.Scroller = Scroller;
 
 
-// DataTables 1.10 API method aliases
+// DataTables 1.10 AquariumAPIService method aliases
 var Api = $.fn.dataTable.Api;
 
 Api.register( 'scroller()', function () {

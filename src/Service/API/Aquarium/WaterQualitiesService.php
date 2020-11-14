@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Utils\CallAPI;
+namespace App\Service\API\Aquarium;
 
 
-use App\Utils\CallAPI\Entity\WaterQuality;
+use App\Service\API\Aquarium\Entity\WaterQuality;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -11,11 +11,11 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class API_waterQualities extends API
+class WaterQualitiesService extends AquariumAPIService
 {
     private const PATHURL = 'water_qualities';
     /**
-     * API_waterQualities constructor.
+     * WaterQualitiesService constructor.
      * @param SerializerInterface $serializer
      */
     public function __construct(SerializerInterface $serializer)
